@@ -9,7 +9,7 @@
     </div> -->
     <div class="products" v-if="isProductExist">
       <div class="row">
-        <CartTemplate
+        <ProductTemplate
           v-for="(product, index) in products"
           :key="index"
           :product="product"
@@ -28,11 +28,11 @@ import { computed } from "vue";
 //import { mapGetters, mapState } from "vuex";
 import { useStore } from "vuex";
 
-import CartTemplate from "../components/product/CartTemplate.vue";
+import ProductTemplate from "../components/product/ProductTemplate.vue";
 
 export default {
   name: "products-page",
-  components: { CartTemplate },
+  components: { ProductTemplate },
   setup() {
     const store = useStore();
     const products = computed(() => store.state.products.all);
@@ -40,8 +40,6 @@ export default {
     const isProductExist = computed(
       () => store.getters["products/isProductExist"]
     );
-
-    store.dispatch("products/getAllProducts");
 
     return { products, images, isProductExist };
   },

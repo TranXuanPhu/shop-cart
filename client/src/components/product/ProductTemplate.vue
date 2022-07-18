@@ -40,7 +40,7 @@
 import { useStore } from "vuex";
 import { toMoneyString } from "../../utils/utils.js";
 export default {
-  name: "cart-template",
+  name: "product-template",
   props: {
     product: {
       type: Object,

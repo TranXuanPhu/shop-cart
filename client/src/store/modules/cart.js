@@ -1,6 +1,7 @@
+const items = JSON.parse(localStorage.getItem("cart"));
 //state
 const state = {
-  items: [],
+  items: items || [],
 };
 
 //getters
@@ -19,6 +20,14 @@ const getters = {
           }
         : undefined;
     });
+  },
+  getImage(state, getters, rootState) {
+    return (_idProduct) => {
+      const indexImg = rootState.products.all.findIndex(
+        (product) => product._id === _idProduct
+      );
+      return rootState.products.images.at(indexImg);
+    };
   },
   getTotalPrice(state, getters) {
     return getters.cartProducts.reduce((total, product) => {
@@ -40,8 +49,21 @@ const actions = {
     if (!cartItem) commit("pushProductToCart", _id);
     else commit("incrementItemQuantity", cartItem);
   },
+  decrementProductQuantity({ state, commit }, _id) {
+    const cartItem = state.items.find((item) => item._id === _id);
+    if (cartItem) {
+      if (cartItem.quantity > 0) {
+        if (cartItem.quantity === 1) commit("deleteProduct", cartItem);
+        else commit("decrementItemQuantity", cartItem);
+      }
+    }
+  },
   setCartProducts({ commit }, items) {
     commit("setCartItems", { items });
+  },
+  deleteProductInCart({ state, commit }, _id) {
+    const cartItem = state.items.find((item) => item._id === _id);
+    if (cartItem) commit("deleteProduct", cartItem);
   },
 };
 
@@ -56,9 +78,22 @@ const mutations = {
     if (cartItem) cartItem.quantity++;
     localStorage.setItem("cart", JSON.stringify(state.items));
   },
+  decrementItemQuantity(state, { _id }) {
+    const cartItem = state.items.find((item) => item._id == _id);
+    if (cartItem) {
+      if (cartItem.quantity > 0) cartItem.quantity--;
+    }
+    localStorage.setItem("cart", JSON.stringify(state.items));
+  },
   setCartItems(state, { items }) {
-    console.log(items);
+    console.log("mutations::setCartItems", items);
     state.items = items;
+  },
+  deleteProduct(state, item) {
+    const index = state.items.indexOf(item);
+    console.log("mutations::deleteProduct", index, state.items);
+    if (index >= 0) state.items.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(state.items));
   },
 };
 

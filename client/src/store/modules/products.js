@@ -1,4 +1,4 @@
-import url from "../../api/product.js";
+import url from "../../api/index.js";
 import axios from "axios";
 
 //state
@@ -14,6 +14,9 @@ const getters = {
   // },
   isProductExist(state) {
     return Array.isArray(state.all) && state.all.length;
+  },
+  getImages(state) {
+    return state.images;
   },
 };
 

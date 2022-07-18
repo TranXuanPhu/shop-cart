@@ -44,6 +44,32 @@
             </router-link>
           </div>
         </div>
+        <div class="nav-item dropdown" v-if="isLoggedUser()">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >{{ user.firstName }}</a
+          >
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <router-link to="/" class="dropdown-item">Profile</router-link>
+            <router-link
+              to="/"
+              class="dropdown-item text-danger"
+              @click="logOut()"
+              >Logout</router-link
+            >
+          </div>
+        </div>
+        <div class="nav-item" v-if="!isLoggedUser()">
+          <router-link :to="{ name: 'Login' }" class="nav-link"
+            >Login</router-link
+          >
+        </div>
       </nav>
       <router-view />
     </main>
@@ -60,14 +86,24 @@ export default {
     const totalCartProducts = computed(
       () => store.getters["cart/getTotalCountProducts"]
     );
-    function getLocalProducts() {
-      const items = JSON.parse(localStorage.getItem("cart"));
-      if (items) store.dispatch("cart/setCartProducts", items);
+    const user = computed(() => store.getters["user/getLoggedUser"]);
+
+    //method
+    function isLoggedUser() {
+      const user = store.getters["user/getLoggedUser"];
+      return user.firstName;
     }
+    function logOut() {}
 
-    getLocalProducts();
+    // function getLocalProducts() {
+    //   const items = JSON.parse(localStorage.getItem("cart"));
+    //   if (items) store.dispatch("cart/setCartProducts", items);
+    // }
 
-    return { totalCartProducts };
+    // getLocalProducts();
+    store.dispatch("products/getAllProducts");
+
+    return { totalCartProducts, user, isLoggedUser, logOut };
   },
 };
 </script>

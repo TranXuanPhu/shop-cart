@@ -46,7 +46,7 @@
 import { useRoute } from "vue-router";
 import axios from "axios";
 import { ref } from "vue";
-import url from "../../api/product.js";
+import url from "../../api/index.js";
 import SplideBasic from "./splide/SplideBasic.vue";
 import { toMoneyString } from "../../utils/utils.js";
 export default {

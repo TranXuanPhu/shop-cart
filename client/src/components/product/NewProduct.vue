@@ -70,7 +70,7 @@
 <script>
 import $ from "../../../node_modules/jquery/dist/jquery.min.js";
 import axios from "axios";
-import url from "../../api/product.js";
+import url from "../../api/index.js";
 
 //import { ref } from "vue";
 
