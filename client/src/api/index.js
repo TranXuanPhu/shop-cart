@@ -5,6 +5,7 @@ const url = {
   account: "/account",
   register: "/account/register",
   login: "/account/login",
+  refreshtoken: "/account/refreshtoken",
 };
 
 //NOTE: set url

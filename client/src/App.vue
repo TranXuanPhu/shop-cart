@@ -44,7 +44,7 @@
             </router-link>
           </div>
         </div>
-        <div class="nav-item dropdown" v-if="isLoggedUser()">
+        <div class="nav-item dropdown" v-if="isLoggedIn()">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -53,19 +53,17 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            >{{ user.firstName }}</a
+            >{{ user.fullName }}</a
           >
+          <div @click="logOut()">phuka</div>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <router-link to="/" class="dropdown-item">Profile</router-link>
-            <router-link
-              to="/"
-              class="dropdown-item text-danger"
-              @click="logOut()"
+            <router-link to="/" class="dropdown-item text-danger"
               >Logout</router-link
             >
           </div>
         </div>
-        <div class="nav-item" v-if="!isLoggedUser()">
+        <div class="nav-item" v-if="!isLoggedIn()">
           <router-link :to="{ name: 'Login' }" class="nav-link"
             >Login</router-link
           >
@@ -89,21 +87,19 @@ export default {
     const user = computed(() => store.getters["user/getLoggedUser"]);
 
     //method
-    function isLoggedUser() {
-      const user = store.getters["user/getLoggedUser"];
-      return user.firstName;
+    function isLoggedIn() {
+      return store.getters["user/getStatusloggedIn"];
     }
-    function logOut() {}
+    function logOut() {
+      store.dispatch("user/logOut");
+    }
 
-    // function getLocalProducts() {
-    //   const items = JSON.parse(localStorage.getItem("cart"));
-    //   if (items) store.dispatch("cart/setCartProducts", items);
-    // }
-
+    const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+    console.log(accessToken);
     // getLocalProducts();
     store.dispatch("products/getAllProducts");
 
-    return { totalCartProducts, user, isLoggedUser, logOut };
+    return { totalCartProducts, user, isLoggedIn, logOut };
   },
 };
 </script>

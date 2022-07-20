@@ -80,7 +80,6 @@
 <script>
 //import autoAnimate from "@formkit/auto-animate";
 //import { ref } from "vue";
-//import AccountService from "../../api/services/account.service.js";
 import { validate } from "../../const/validate.js";
 import { useStore } from "vuex";
 export default {
@@ -90,7 +89,6 @@ export default {
     function handleRegister(event) {
       console.log("Register", event);
       const resPromise = store.dispatch("user/register", event);
-      // const resPromise = AccountService.register(event);
       resPromise.then((data) => {
         console.log("data", data);
       });

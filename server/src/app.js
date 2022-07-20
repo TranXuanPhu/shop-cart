@@ -12,7 +12,7 @@ const routers = require('./routers/router.js');
 app.use(express.static(path.join(__dirname, 'public')));
 
 //NOTE: app use
-app.use(cors()); // to allow cross origin requests
+app.use(cors({ credentials: true })); //Để bật cookie HTTP qua CORS
 app.use(cookieParser());
 //app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));

@@ -9,6 +9,10 @@ import router from "./router/router.js";
 import store from "./store/index.js";
 import FontAwesomeIcon from "@/plugins/fontawesome";
 
+import axiosSetup from "./api/axios/axiosClient.js";
+// call the axios setup method here
+axiosSetup(store, router);
+
 const app = createApp(App);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
